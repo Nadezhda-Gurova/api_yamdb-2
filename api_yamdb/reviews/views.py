@@ -1,11 +1,11 @@
-from api_yamdb.api.filters import CustomFilter
-from .models import Category, Genre, Title
-from rest_framework import filters, viewsets
-from rest_framework.permissions import IsAuthenticated
 from django.db.models import Avg
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import filters, viewsets
 
-from api_yamdb.reviews.permissions import AdminOrReadOnly
-from api_yamdb.reviews.serializers import (
+from api.filters import CustomFilter
+from .models import Category, Genre, Title
+from .permissions import AdminOrReadOnly
+from .serializers import (
     GenresSerializer, CategoriesSerializer, TitleSerializer,TitleAdminSerializer)
 
 
@@ -28,7 +28,7 @@ class GenresViewSet(viewsets.ModelViewSet):
 
 
 class TitlesViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all().annotate(rating=Avg('reviews__score'))
+    # queryset = Title.objects.all().annotate(rating=Avg('reviews__score'))
     permission_classes = (AdminOrReadOnly,)
     filterset_class = CustomFilter
 

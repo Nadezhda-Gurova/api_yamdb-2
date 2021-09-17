@@ -74,7 +74,7 @@ def signup(request):
             [user.email],
             fail_silently=False,
             auth_user=user.username,
-            )
+        )
         return Response(
             {'email': user.email, 'username': user.username},
             status=status.HTTP_200_OK

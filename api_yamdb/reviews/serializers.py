@@ -1,6 +1,3 @@
-from django.contrib.auth import password_validation
-from django.contrib.auth.hashers import make_password
-from django.core import exceptions
 from rest_framework import serializers
 
 from .models import Category, Comment, Genre, Review, Title
@@ -67,7 +64,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         title = self.context['request'].parser_context['kwargs']['title_id']
         request = self.context.get('request')
         if (
-            request.method == 'POST' \
+            request.method == 'POST'
             and Review.objects.filter(
                 title=title, author=request.user
             ).exists()

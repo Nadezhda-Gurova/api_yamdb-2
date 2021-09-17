@@ -7,8 +7,11 @@ from reviews.models import Category, Genre, Review, Title
 from reviews.serializers import (CategorySerializer, CommentSerializer,
                                  GenreSerializer, ReviewSerializer,
                                  TitleSerializer, TitleSerializerCreate)
-from .permissions import (IsAdminOrReadOnlyPermissions, IsOwnerOrReadOnlyPermissions,
-                               IsStaffOrReadOnlyPermissions)
+from .permissions import (
+    IsAdminOrReadOnlyPermissions,
+    IsOwnerOrReadOnlyPermissions,
+    IsStaffOrReadOnlyPermissions
+)
 
 from .filters import TitleFilter
 

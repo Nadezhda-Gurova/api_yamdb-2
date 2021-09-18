@@ -1,6 +1,5 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-
 from reviews.views import (CategoriesViewSet, CommentViewSet, GenresViewSet,
                            ReviewViewSet, TitlesViewSet)
 from users.views import UserViewSet, get_jwt_token, signup

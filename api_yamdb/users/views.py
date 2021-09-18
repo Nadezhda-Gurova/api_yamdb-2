@@ -28,7 +28,7 @@ class UserViewSet(viewsets.ModelViewSet):
         permission_classes=[permissions.IsAdminUser],
     )
     def perform_update(self, serializer):
-        role = serializer.validated_data.get('role', None)
+        role = serializer.validated_data.get('role')
         if role is not None:
             if role == User.ADMIN:
                 serializer.save(is_staff=True, is_superuser=True)
@@ -46,7 +46,7 @@ class UserViewSet(viewsets.ModelViewSet):
         permission_classes=[permissions.IsAuthenticated],
     )
     def me(self, request):
-        user = get_object_or_404(User, username=request.user.username)
+        user = request.user
         serializer = UserSerializer(user, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         role = request.data.get('role')
@@ -62,7 +62,7 @@ class UserViewSet(viewsets.ModelViewSet):
 @api_view(['POST'])
 def signup(request):
     serializer = UserSignupSerializer(data=request.data)
-    if serializer.is_valid():
+    if serializer.is_valid(raise_exception=True):
         user = serializer.save()
         user.confirmation_code = default_token_generator.make_token(user)
         mail_subject = 'confirmation code'
@@ -79,15 +79,14 @@ def signup(request):
             {'email': user.email, 'username': user.username},
             status=status.HTTP_200_OK
         )
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
 def get_jwt_token(request):
     serializer = UserJwtSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    username = serializer.data.get('username')
-    confirmation_code = serializer.data.get('confirmation_code')
+    username = serializer.validated_data.get('username')
+    confirmation_code = serializer.validated_data.get('confirmation_code')
     user = get_object_or_404(User, username=username)
     if default_token_generator.check_token(user, confirmation_code):
         user.is_active = True

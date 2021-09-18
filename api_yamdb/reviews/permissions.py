@@ -20,15 +20,17 @@ class IsAdminOrReadOnlyPermissions(permissions.BasePermission):
 class IsStaffOrReadOnlyPermissions(permissions.BasePermission):
     def has_permission(self, request, view):
         return (
-            request.method in permissions.SAFE_METHODS
-        ) or request.user.role == User.MODERATOR \
+            (request.method in permissions.SAFE_METHODS)
+            or request.user.role == User.MODERATOR
             or request.user.role == User.ADMIN
+        )
 
     def has_object_permission(self, request, view, obj):
         return (
-            request.method in permissions.SAFE_METHODS
-        ) or request.user.role == User.MODERATOR \
+            (request.method in permissions.SAFE_METHODS)
+            or request.user.role == User.MODERATOR
             or request.user.role == User.ADMIN
+        )
 
 
 class IsOwnerOrReadOnlyPermissions(permissions.BasePermission):
@@ -41,7 +43,9 @@ class IsOwnerOrReadOnlyPermissions(permissions.BasePermission):
         if request.method in ('POST', 'PUT', 'GET'):
             return True
         if request.method in ('PATCH', 'DELETE'):
-            return request.user == obj.author \
-                or request.user.role == User.MODERATOR \
+            return (
+                request.user == obj.author
+                or request.user.role == User.MODERATOR
                 or request.user.role == User.ADMIN
+            )
         return False

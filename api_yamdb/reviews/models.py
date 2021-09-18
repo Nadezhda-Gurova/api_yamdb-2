@@ -1,13 +1,11 @@
-import datetime
-
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-
+from django.utils import timezone
 from users.models import User
 
 
 def today_year():
-    return int(datetime.date.today().year)
+    return int(timezone.now().today().year)
 
 
 class Genre(models.Model):
@@ -90,12 +88,15 @@ class Review(models.Model):
         verbose_name='Произведение',
     )
     score = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(100)],
+        validators=[
+            MinValueValidator(1, 'Значение ниже допустимого'),
+            MaxValueValidator(100,'Значение выше допустимого')
+        ],
         verbose_name='Оценка',
     )
 
     class Meta:
-        unique_together = ['author', 'title']
+        constraints = [models.UniqueConstraint(fields=['author', 'title'], name='unique'),]
         ordering = ['-pub_date']
 
     def __str__(self):

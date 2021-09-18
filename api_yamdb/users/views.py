@@ -62,23 +62,23 @@ class UserViewSet(viewsets.ModelViewSet):
 @api_view(['POST'])
 def signup(request):
     serializer = UserSignupSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        user = serializer.save()
-        user.confirmation_code = default_token_generator.make_token(user)
-        mail_subject = 'confirmation code'
-        message = f'Your confirmation code: {user.confirmation_code}'
-        send_mail(
-            mail_subject,
-            message,
-            DEFAULT_FROM_EMAIL,
-            [user.email],
-            fail_silently=False,
-            auth_user=user.username,
-        )
-        return Response(
-            {'email': user.email, 'username': user.username},
-            status=status.HTTP_200_OK
-        )
+    serializer.is_valid(raise_exception=True)
+    user = serializer.save()
+    user.confirmation_code = default_token_generator.make_token(user)
+    mail_subject = 'confirmation code'
+    message = f'Your confirmation code: {user.confirmation_code}'
+    send_mail(
+        mail_subject,
+        message,
+        DEFAULT_FROM_EMAIL,
+        [user.email],
+        fail_silently=False,
+        auth_user=user.username,
+    )
+    return Response(
+        {'email': user.email, 'username': user.username},
+        status=status.HTTP_200_OK
+    )
 
 
 @api_view(['POST'])

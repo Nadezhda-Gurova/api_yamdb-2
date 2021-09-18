@@ -92,11 +92,13 @@ class Review(models.Model):
             MinValueValidator(1, 'Значение ниже допустимого'),
             MaxValueValidator(100,'Значение выше допустимого')
         ],
-        verbose_name='Оценка',
+        verbose_name='Оценка'
     )
 
     class Meta:
-        constraints = [models.UniqueConstraint(fields=['author', 'title'], name='unique'),]
+        constraints = [
+            models.UniqueConstraint(fields=['author', 'title'], name='unique')
+        ]
         ordering = ['-pub_date']
 
     def __str__(self):

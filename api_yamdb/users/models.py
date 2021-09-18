@@ -29,9 +29,8 @@ class User(AbstractUser):
         max_length=70, unique=True, blank=True, null=True
     )
 
-
     class Meta:
         ordering = ('id',)
 
     def __str__(self):
-            return self.username
+        return self.username

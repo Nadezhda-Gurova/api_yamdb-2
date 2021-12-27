@@ -6,7 +6,7 @@ from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 
-from api_yamdb.settings import DEFAULT_FROM_EMAIL
+from api_yamdb import DEFAULT_FROM_EMAIL
 
 from .models import User
 from .permissions import IsAdmin

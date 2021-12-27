@@ -36,7 +36,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'api_yamdb.urls'
 
-TEMPLATES_DIR = os.path.join(BASE_DIR, "api_yamdb/../templates")
+TEMPLATES_DIR = os.path.join(BASE_DIR,
+                             "api_yamdb/../api_yamdb/../api_yamdb/../templates")
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

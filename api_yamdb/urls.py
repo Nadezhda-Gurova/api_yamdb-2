@@ -9,7 +9,7 @@ urlpatterns = [
     path('api/', include('reviews.urls')),
     path(
         'redoc/',
-        TemplateView.as_view(template_name='redoc.html'),
+        TemplateView.as_view(template_name='api_yamdb/templates/redoc.html'),
         name='redoc'
     ),
 ]

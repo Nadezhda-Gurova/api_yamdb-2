@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'api',
     'reviews',
     'users',
-    # 'api_yamdb'
+    'api_yamdb'
 ]
 
 MIDDLEWARE = [
